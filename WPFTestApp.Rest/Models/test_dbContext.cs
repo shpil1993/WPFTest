@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -24,8 +27,8 @@ namespace WPFTestApp.Rest.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=test1234;database=test_db");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=test1234;database=test_db");
             }
         }
 
@@ -278,6 +281,34 @@ namespace WPFTestApp.Rest.Models
             });
 
             OnModelCreatingPartial(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            BeforeSaveChanges();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            BeforeSaveChanges();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void BeforeSaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries().ToList())
+            {
+                var entity = entry.Entity as Person;
+                if (entity == null)
+                {
+                    continue;
+                }
+                if (entry.State == EntityState.Added)
+                {
+                    entity.FirstContact = DateTime.Now;
+                }
+            }
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

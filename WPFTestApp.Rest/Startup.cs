@@ -2,14 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OData.Edm;
+using WPFTestApp.Rest.Models;
 
 namespace WPFTestApp.Rest
 {
@@ -26,6 +31,11 @@ namespace WPFTestApp.Rest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<test_dbContext>(options =>
+            {
+                options.UseMySQL(Configuration.GetConnectionString("TestConnection"));
+            });
+            services.AddOData();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,12 +50,24 @@ namespace WPFTestApp.Rest
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(50);
+                endpoints.MapODataRoute("odata", "odata", GetEdmModel());
             });
+        }
+
+        private IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Person>("Person");
+            builder.EntitySet<PersonContact>("PersonContact");
+            builder.EntitySet<Greeting>("Greeting");
+            builder.EntitySet<Country>("Country");
+            return builder.GetEdmModel();
         }
     }
 }

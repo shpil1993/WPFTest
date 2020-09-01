@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WPFTestApp.Rest.Models
 {
@@ -10,6 +11,7 @@ namespace WPFTestApp.Rest.Models
             Person = new HashSet<Person>();
         }
 
+        [Key]
         public string Code { get; set; }
         public string Txt1 { get; set; }
         public string Txt2 { get; set; }
