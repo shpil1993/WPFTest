@@ -3,6 +3,7 @@ using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using WPFTestApp.Rest.DBContext;
 using WPFTestApp.Rest.Models;
 
 namespace WPFTestApp.Rest.Controllers

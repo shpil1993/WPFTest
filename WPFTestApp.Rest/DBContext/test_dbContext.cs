@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using WPFTestApp.Rest.Models;
 
-namespace WPFTestApp.Rest.Models
+namespace WPFTestApp.Rest.DBContext
 {
     public partial class test_dbContext : DbContext
     {

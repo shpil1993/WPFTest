@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFTestApp.Client.ViewModel;
 
 namespace WPFTestApp.Client
 {
@@ -23,6 +24,8 @@ namespace WPFTestApp.Client
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowViewModel();
         }
     }
 }

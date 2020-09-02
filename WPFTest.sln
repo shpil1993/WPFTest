@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFTestApp.Rest", "WPFTestApp.Rest\WPFTestApp.Rest.csproj", "{F81DF482-AC4F-4ED5-9332-5C199B08E270}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFTestApp.Client", "WPFTestApp.Client\WPFTestApp.Client.csproj", "{A43A50C3-D24E-4C9F-9B07-0C6398D2928A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFTestApp.Client", "WPFTestApp.Client\WPFTestApp.Client.csproj", "{A43A50C3-D24E-4C9F-9B07-0C6398D2928A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFTestApp.Models", "WPFTestApp.Models\WPFTestApp.Models.csproj", "{56417AE2-B102-4293-9A3A-AA02CB5F6BA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A43A50C3-D24E-4C9F-9B07-0C6398D2928A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A43A50C3-D24E-4C9F-9B07-0C6398D2928A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A43A50C3-D24E-4C9F-9B07-0C6398D2928A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56417AE2-B102-4293-9A3A-AA02CB5F6BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56417AE2-B102-4293-9A3A-AA02CB5F6BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56417AE2-B102-4293-9A3A-AA02CB5F6BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56417AE2-B102-4293-9A3A-AA02CB5F6BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

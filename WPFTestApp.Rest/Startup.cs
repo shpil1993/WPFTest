@@ -1,20 +1,15 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OData.Edm;
-using WPFTestApp.Rest.Models;
+using WPFTestApp.Models;
+using WPFTestApp.Rest.DBContext;
 
 namespace WPFTestApp.Rest
 {
@@ -55,7 +50,7 @@ namespace WPFTestApp.Rest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(50);
+                endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(20);
                 endpoints.MapODataRoute("odata", "odata", GetEdmModel());
             });
         }

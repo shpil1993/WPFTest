@@ -1,0 +1,96 @@
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="WPFTestApp.Models" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Person">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Title" Type="Edm.String" />
+        <Property Name="Fname" Type="Edm.String" />
+        <Property Name="Lname" Type="Edm.String" />
+        <Property Name="Cpny" Type="Edm.String" />
+        <Property Name="Street" Type="Edm.String" />
+        <Property Name="CountryCode" Type="Edm.String" />
+        <Property Name="Zip" Type="Edm.String" />
+        <Property Name="City" Type="Edm.String" />
+        <Property Name="GenderId" Type="Edm.Byte" Nullable="false" />
+        <Property Name="GreetingId" Type="Edm.Int32" />
+        <Property Name="DateOfBirth" Type="Edm.DateTimeOffset" />
+        <Property Name="FirstContact" Type="Edm.DateTimeOffset" Nullable="false" />
+        <Property Name="Notes" Type="Edm.String" />
+        <NavigationProperty Name="CountryCodeNavigation" Type="WPFTestApp.Models.Country">
+          <ReferentialConstraint Property="CountryCode" ReferencedProperty="Code" />
+        </NavigationProperty>
+        <NavigationProperty Name="Greeting" Type="WPFTestApp.Models.Greeting">
+          <ReferentialConstraint Property="GreetingId" ReferencedProperty="Id" />
+        </NavigationProperty>
+        <NavigationProperty Name="PersonContact" Type="Collection(WPFTestApp.Models.PersonContact)" />
+      </EntityType>
+      <EntityType Name="PersonContact">
+        <Key>
+          <PropertyRef Name="PersonContactId" />
+          <PropertyRef Name="PersonId" />
+        </Key>
+        <Property Name="PersonId" Type="Edm.Int32" />
+        <Property Name="PersonContactId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ContactTypeId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Txt" Type="Edm.String" />
+        <Property Name="Notes" Type="Edm.String" />
+        <Property Name="Active" Type="Edm.Byte" Nullable="false" />
+        <NavigationProperty Name="Person" Type="WPFTestApp.Models.Person">
+          <ReferentialConstraint Property="PersonId" ReferencedProperty="Id" />
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Greeting">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Txt1" Type="Edm.String" />
+        <Property Name="Txt2" Type="Edm.String" />
+        <Property Name="Txt3" Type="Edm.String" />
+        <Property Name="Txt4" Type="Edm.String" />
+        <Property Name="TxtLetter1" Type="Edm.String" />
+        <Property Name="TxtLetter2" Type="Edm.String" />
+        <Property Name="TxtLetter3" Type="Edm.String" />
+        <Property Name="TxtLetter4" Type="Edm.String" />
+        <Property Name="Active" Type="Edm.Byte" Nullable="false" />
+        <NavigationProperty Name="Person" Type="Collection(WPFTestApp.Models.Person)" />
+      </EntityType>
+      <EntityType Name="Country">
+        <Key>
+          <PropertyRef Name="Code" />
+        </Key>
+        <Property Name="Code" Type="Edm.String" Nullable="false" />
+        <Property Name="Txt1" Type="Edm.String" />
+        <Property Name="Txt2" Type="Edm.String" />
+        <Property Name="Txt3" Type="Edm.String" />
+        <Property Name="Txt4" Type="Edm.String" />
+        <Property Name="IntDialCode" Type="Edm.String" />
+        <Property Name="AddrFormatId" Type="Edm.Byte" Nullable="false" />
+        <Property Name="IsVatIncluded" Type="Edm.Byte" Nullable="false" />
+        <Property Name="Active" Type="Edm.Byte" Nullable="false" />
+        <NavigationProperty Name="Person" Type="Collection(WPFTestApp.Models.Person)" />
+      </EntityType>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="Container">
+        <EntitySet Name="Person" EntityType="WPFTestApp.Models.Person">
+          <NavigationPropertyBinding Path="CountryCodeNavigation" Target="Country" />
+          <NavigationPropertyBinding Path="Greeting" Target="Greeting" />
+          <NavigationPropertyBinding Path="PersonContact" Target="PersonContact" />
+        </EntitySet>
+        <EntitySet Name="PersonContact" EntityType="WPFTestApp.Models.PersonContact">
+          <NavigationPropertyBinding Path="Person" Target="Person" />
+        </EntitySet>
+        <EntitySet Name="Greeting" EntityType="WPFTestApp.Models.Greeting">
+          <NavigationPropertyBinding Path="Person" Target="Person" />
+        </EntitySet>
+        <EntitySet Name="Country" EntityType="WPFTestApp.Models.Country">
+          <NavigationPropertyBinding Path="Person" Target="Person" />
+        </EntitySet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
