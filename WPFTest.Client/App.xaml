@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:WPFTest.Client"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <FontFamily x:Key="FontAwesomeFontFamily">/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

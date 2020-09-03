@@ -21,7 +21,7 @@ namespace WPFTest.Client.Model
         private string birthday;
         private string registration;
 
-        [Display(Name = "Address No")]
+        [DisplayName("Address No")]
         public int AddressNo
         {
             get { return addressNo; }
@@ -62,7 +62,7 @@ namespace WPFTest.Client.Model
             }
         }
 
-        [Display(Name = "First Name")]
+        [DisplayName("First Name")]
         public string FirstName
         {
             get { return firstName; }
@@ -73,7 +73,7 @@ namespace WPFTest.Client.Model
             }
         }
 
-        [Display(Name = "Last Name")]
+        [DisplayName("Last Name")]
         public string LastName
         {
             get { return lastName; }
@@ -104,7 +104,7 @@ namespace WPFTest.Client.Model
             }
         }
 
-        [Display(Name = "Postal Code")]
+        [DisplayName("Postal Code")]
         public string PostalCode
         {
             get { return postalCode; }

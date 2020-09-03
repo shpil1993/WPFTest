@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFTest.Client.Enums;
+using WPFTest.Client.Utils;
 using WPFTestApp.Client.ViewModel;
 
 namespace WPFTest.Client
@@ -25,6 +27,17 @@ namespace WPFTest.Client
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+            comboBoxLocales.ItemsSource = Enum.GetValues(typeof(Locale)).Cast<Locale>();
+        }
+
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var displayName = Utilities.GetPropertyDisplayName(e.PropertyDescriptor);
+
+            if (!string.IsNullOrEmpty(displayName))
+            {
+                e.Column.Header = displayName;
+            }
         }
     }
 }

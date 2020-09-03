@@ -8,39 +8,93 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"></ColumnDefinition>
-            <ColumnDefinition Width="35*"></ColumnDefinition>
-            <ColumnDefinition Width="35*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="80*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Viewbox VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <TextBlock TextWrapping="Wrap" 
+                       Text="Customers" 
+                       Margin="3"/>
+        </Viewbox>
+        <TextBox Margin="10" 
+                 Grid.Column="1" 
+                 Grid.ColumnSpan="2"
+                 Width="Auto" 
+                 Height="30"
+                 FontSize="25"
+                 VerticalAlignment="Bottom"></TextBox>
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Column="3" 
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Right"
+                    Grid.ColumnSpan="2">
+            <ComboBox Margin="5" 
+                      Height="30" 
+                      Width="55"
+                      Name="comboBoxLocales"
+                      SelectedIndex="3"
+                      FontSize="20"
+                      BorderBrush="Transparent"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      HorizontalContentAlignment="Center"
+                      VerticalContentAlignment="Center">
+            </ComboBox>
+            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                    Content="&#xf067;"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Height="50"
+                    Width="60"
+                    FontSize="40"
+                    Foreground="Blue">
+            </Button>
+            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                    Content="&#xf304;"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Height="50"
+                    Width="60"
+                    FontSize="40">
+            </Button>
+            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                    Content="&#xf2f9;"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Height="50"
+                    Width="60"
+                    FontSize="40"
+                    >
+            </Button>
+            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                    Content="&#xf2ed;"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Height="50"
+                    Width="60"
+                    FontSize="40"
+                    >
+            </Button>
+        </StackPanel>
         <DataGrid Grid.Row="1" 
-                  Grid.ColumnSpan="3" 
-                  AutoGenerateColumns="True" 
+                  Grid.ColumnSpan="5" 
                   Name="dataGrid1" 
                   CanUserSortColumns="True"
                   IsReadOnly="True"
                   SelectionMode="Extended" 
                   CanUserAddRows="False"
-                  ItemsSource="{Binding People}">
-            <DataGrid.Columns>
-                <!--<DataGridTextColumn Header="{Binding AddressNo}" Binding="{Binding AddressNo}"/>
-                <DataGridTextColumn Header="{Binding Company}" Binding="{Binding Company}"/>
-                <DataGridTextColumn Header="{Binding Greeting}" Binding="{Binding Greeting}"/>
-                <DataGridTextColumn Header="{Binding Title}" Binding="{Binding Title}"/>
-                <DataGridTextColumn Header="{Binding FirstName}" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="{Binding LastName}" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="{Binding Street}" Binding="{Binding Street}"/>
-                <DataGridTextColumn Header="{Binding Country}" Binding="{Binding Country}"/>
-                <DataGridTextColumn Header="{Binding PostalCode}" Binding="{Binding PostalCode}"/>
-                <DataGridTextColumn Header="{Binding City}" Binding="{Binding City}"/>
-                <DataGridTextColumn Header="{Binding Phone}" Binding="{Binding Phone}"/>
-                <DataGridTextColumn Header="{Binding Birthday}" Binding="{Binding Birthday}"/>
-                <DataGridTextColumn Header="{Binding Registration}" Binding="{Binding Registration}"/>-->
-            </DataGrid.Columns>
+                  ItemsSource="{Binding People}"
+                  ColumnWidth="*"
+                  Margin="5"
+                  AutoGeneratingColumn="OnAutoGeneratingColumn">
         </DataGrid>
     </Grid>
 </Window>
