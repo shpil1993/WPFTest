@@ -18,31 +18,11 @@ namespace WPFTestApp.Rest.Controllers
             _context = context;
         }
 
-        [EnableQuery(PageSize = 50)]
+        [EnableQuery]
         [ODataRoute]
         public IQueryable<Country> Get()
         {
             return _context.Country;
-        }
-
-        // GET: api/country(5)
-        [EnableQuery]
-        [ODataRoute("({id})")]
-        public async Task<IActionResult> GetCountry([FromODataUri] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var contact = await _context.Country.FindAsync(id);
-
-            if (contact == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(contact);
         }
     }
 }

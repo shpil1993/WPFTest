@@ -16,7 +16,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding People}">
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding People}" ScrollViewer.ScrollChanged="DataGrid_ScrollChanged">
             
         </DataGrid>
     </Grid>

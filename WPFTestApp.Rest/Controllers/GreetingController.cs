@@ -3,6 +3,7 @@ using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using WPFTestApp.Rest.DBContext;
 using WPFTestApp.Rest.Models;
 
 namespace WPFTestApp.Rest.Controllers
@@ -17,31 +18,11 @@ namespace WPFTestApp.Rest.Controllers
             _context = context;
         }
 
-        [EnableQuery(PageSize = 50)]
+        [EnableQuery]
         [ODataRoute]
         public IQueryable<Greeting> Get()
         {
             return _context.Greeting;
-        }
-
-        // GET: api/greeting(5)
-        [EnableQuery]
-        [ODataRoute("({id})")]
-        public async Task<IActionResult> GetCountry([FromODataUri] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var contact = await _context.Greeting.FindAsync(id);
-
-            if (contact == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(contact);
         }
     }
 }

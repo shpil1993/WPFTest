@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
-namespace WPFTestApp.Client.Model
+namespace WPFTest.Client.Model
 {
     public class Person : INotifyPropertyChanged
     {
@@ -18,8 +18,8 @@ namespace WPFTestApp.Client.Model
         private string postalCode;
         private string city;
         private string phone;
-        private DateTimeOffset? birthday;
-        private DateTimeOffset? registration;
+        private string birthday;
+        private string registration;
 
         [Display(Name = "Address No")]
         public int AddressNo
@@ -135,7 +135,7 @@ namespace WPFTestApp.Client.Model
             }
         }
 
-        public DateTimeOffset? Birthday
+        public string Birthday
         {
             get { return birthday; }
             set
@@ -145,7 +145,7 @@ namespace WPFTestApp.Client.Model
             }
         }
 
-        public DateTimeOffset? Registration
+        public string Registration
         {
             get { return registration; }
             set

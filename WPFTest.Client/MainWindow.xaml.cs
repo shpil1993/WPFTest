@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPFTestApp.Client.ViewModel;
 
-namespace WPFTestApp.Client
+namespace WPFTest.Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,13 +24,7 @@ namespace WPFTestApp.Client
         public MainWindow()
         {
             InitializeComponent();
-
             DataContext = new MainWindowViewModel();
-        }
-
-        private void DataGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            
         }
     }
 }

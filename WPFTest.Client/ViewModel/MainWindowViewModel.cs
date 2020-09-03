@@ -1,17 +1,14 @@
-﻿using Microsoft.OData.Client;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WPFTestApp.Client.Model;
-using WPFTestApp.Client.Services;
+using WPFTest.Client.Model;
+using WPFTest.Client.Service;
 
 namespace WPFTestApp.Client.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private Person selectedPerson;
-
-        private DataServiceQueryContinuation<Models.Person> nextLink;
 
         public ObservableCollection<Person> People { get; set; }
 
@@ -27,15 +24,13 @@ namespace WPFTestApp.Client.ViewModel
 
         public MainWindowViewModel()
         {
-            PopulateGrid();
+            RefreshGrid();
         }
 
-        private void PopulateGrid()
+        private void RefreshGrid()
         {
-            var client = new ODataService();
-            var people = client.GetPeopleForTableAsync().Result;
-            nextLink = people.token;
-            People = new ObservableCollection<Person>(people.people);
+            var service = new HttpService();
+            People = new ObservableCollection<Person>(service.GetPeopleForTable(30, 0, 4, string.Empty));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
