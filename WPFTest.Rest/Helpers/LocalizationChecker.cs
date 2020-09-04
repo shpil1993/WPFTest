@@ -4,19 +4,32 @@
     {
         public static string CheckLocalization(int lang, dynamic entity)
         {
+            string result;
             switch (lang)
             {
                 case 1:
-                    return entity.Txt1;
+                    result = entity.Txt1;
+                    break;
                 case 2:
-                    return entity.Txt2;
+                    result = entity.Txt2;
+                    break;
                 case 3:
-                    return entity.Txt3;
+                    result = entity.Txt3;
+                    break;
                 case 4:
-                    return entity.Txt4;
+                    result = entity.Txt4;
+                    break;
                 default:
-                    return entity.Txt4;
+                    result = entity.Txt1;
+                    break;
             }
+
+            if (string.IsNullOrEmpty(result))
+            {
+                result = entity.Txt1;
+            }
+
+            return result;
         }
     }
 }

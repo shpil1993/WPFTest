@@ -26,13 +26,25 @@ namespace WPFTest.Client
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
             comboBoxLocales.ItemsSource = Enum.GetValues(typeof(Locale)).Cast<Locale>();
         }
 
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var displayName = Utilities.GetPropertyDisplayName(e.PropertyDescriptor);
+
+            switch (e.Column.Header)
+            {
+                case "GreetingId":
+                    e.Cancel = true;
+                    return;
+                case "CountryCode":
+                    e.Cancel = true;
+                    return;
+                case "Gender":
+                    e.Cancel = true;
+                    return;
+            }
 
             if (!string.IsNullOrEmpty(displayName))
             {

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using WPFTest.Client.Enums;
 
 namespace WPFTest.Client.Model
 {
@@ -10,16 +11,19 @@ namespace WPFTest.Client.Model
         private int addressNo;
         private string company;
         private string greeting;
+        private int greetingId;
         private string title;
         private string firstName;
         private string lastName;
         private string street;
         private string country;
+        private string countryCode;
         private string postalCode;
         private string city;
         private string phone;
         private string birthday;
         private string registration;
+        private Gender gender;
 
         [DisplayName("Address No")]
         public int AddressNo
@@ -49,6 +53,16 @@ namespace WPFTest.Client.Model
             {
                 greeting = value;
                 OnPropertyChanged("Greeting");
+            }
+        }
+
+        public int GreetingId
+        {
+            get { return greetingId; }
+            set
+            {
+                greetingId = value;
+                OnPropertyChanged("GreetingId");
             }
         }
 
@@ -104,6 +118,16 @@ namespace WPFTest.Client.Model
             }
         }
 
+        public string CountryCode
+        {
+            get { return countryCode; }
+            set
+            {
+                countryCode = value;
+                OnPropertyChanged("CountryCode");
+            }
+        }
+
         [DisplayName("Postal Code")]
         public string PostalCode
         {
@@ -152,6 +176,16 @@ namespace WPFTest.Client.Model
             {
                 registration = value;
                 OnPropertyChanged("Registration");
+            }
+        }
+
+        public Gender Gender
+        {
+            get { return gender; }
+            set
+            {
+                gender = value;
+                OnPropertyChanged("Gender");
             }
         }
 

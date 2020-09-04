@@ -27,12 +27,19 @@ namespace WPFTest.Rest.Controllers
         {
             return await _context.PersonContact.ToListAsync();
         }
+        
+        [HttpGet]
+        [Route("[action]/{personId}")]
+        public async Task<ActionResult<IEnumerable<PersonContact>>> GetPersonContactsByPersonId(int personId)
+        {
+            return await _context.PersonContact.Where(e => e.PersonId == personId).ToListAsync();
+        }
 
         // GET: api/PersonContact/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PersonContact>> GetPersonContact(int id)
+        [HttpGet("{id}/{personId}")]
+        public async Task<ActionResult<PersonContact>> GetPersonContact(int id, int personId)
         {
-            var personContact = await _context.PersonContact.FindAsync(id);
+            var personContact = await _context.PersonContact.FirstOrDefaultAsync(e => e.PersonContactId == id && e.PersonId == personId);
 
             if (personContact == null)
             {
@@ -45,10 +52,10 @@ namespace WPFTest.Rest.Controllers
         // PUT: api/PersonContact/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPersonContact(int id, PersonContact personContact)
+        [HttpPut("{id}/{personId}")]
+        public async Task<IActionResult> PutPersonContact(int id, int personId, PersonContact personContact)
         {
-            if (id != personContact.PersonId)
+            if (id != personContact.PersonContactId)
             {
                 return BadRequest();
             }
@@ -61,7 +68,7 @@ namespace WPFTest.Rest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonContactExists(id))
+                if (!PersonContactExists(id, personId))
                 {
                     return NotFound();
                 }
@@ -87,7 +94,7 @@ namespace WPFTest.Rest.Controllers
             }
             catch (DbUpdateException)
             {
-                if (PersonContactExists(personContact.PersonId))
+                if (PersonContactExists(personContact.PersonContactId, personContact.PersonId))
                 {
                     return Conflict();
                 }
@@ -97,14 +104,14 @@ namespace WPFTest.Rest.Controllers
                 }
             }
 
-            return CreatedAtAction("GetPersonContact", new { id = personContact.PersonId }, personContact);
+            return CreatedAtAction("GetPersonContact", new { id = personContact.PersonId, contactId = personContact.PersonContactId }, personContact);
         }
 
         // DELETE: api/PersonContact/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<PersonContact>> DeletePersonContact(int id)
+        [HttpDelete("{id}/{personId}")]
+        public async Task<ActionResult<PersonContact>> DeletePersonContact(int id, int personId)
         {
-            var personContact = await _context.PersonContact.FindAsync(id);
+            var personContact = await _context.PersonContact.FirstOrDefaultAsync(e => e.PersonContactId == id && e.PersonId == personId);
             if (personContact == null)
             {
                 return NotFound();
@@ -116,9 +123,9 @@ namespace WPFTest.Rest.Controllers
             return personContact;
         }
 
-        private bool PersonContactExists(int id)
+        private bool PersonContactExists(int id, int personId)
         {
-            return _context.PersonContact.Any(e => e.PersonId == id);
+            return _context.PersonContact.Any(e => e.PersonContactId == id && e.PersonId == personId);
         }
     }
 }

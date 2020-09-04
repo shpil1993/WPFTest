@@ -1,0 +1,73 @@
+﻿<Window x:Class="WPFTest.Client.Views.ContactWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFTest.Client.Views"
+        xmlns:src="clr-namespace:WPFTest.Client.Model"
+        mc:Ignorable="d"
+        Title="ContactWindow" Height="Auto" Width="300" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <src:Contact x:Key="data"/>
+        <Style x:Key="textBoxInError" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Foreground="Gray" FontSize="25" Margin="5">New Contact</TextBlock>
+        <StackPanel Grid.Row="1">
+            <ComboBox Margin="10" 
+                      Background="Transparent" 
+                      BorderBrush="Transparent"
+                      Name="contactTypeCombobox"
+                      SelectedItem="{Binding Path=Contact.ContactType, UpdateSourceTrigger=PropertyChanged}"/>
+            <TabControl SelectedIndex="{Binding ElementName=contactTypeCombobox, Path=SelectedItem}">
+                <TabItem>
+                    <TextBox Margin="10" Text="{Binding Path=Contact.Value, StringFormat={}{0:(###)###-####}, UpdateSourceTrigger=PropertyChanged}"/>
+                </TabItem>
+                <TabItem>
+                    <TextBox Margin="10" Style="{StaticResource textBoxInError}">
+                        <TextBox.Text>
+                            <Binding Path="Contact.Value" 
+                                     UpdateSourceTrigger="PropertyChanged" 
+                                     Source="{StaticResource data}"
+                                     ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </TabItem>
+                <TabControl.Template>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" IsItemsHost="True" Visibility="Hidden" />
+                            <ContentPresenter ContentSource="SelectedContent" Margin="0" />
+                        </Grid>
+                    </ControlTemplate>
+                </TabControl.Template>
+            </TabControl>
+        </StackPanel>
+        <Button Grid.Row="2" 
+                HorizontalAlignment="Right"
+                Margin="10"
+                Foreground="White"
+                Background="#6845f4"
+                Padding="7"
+                Click="Button_Click">Add Contact</Button>
+    </Grid>
+</Window>

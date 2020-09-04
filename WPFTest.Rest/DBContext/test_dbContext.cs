@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using WPFTest.Rest.Models;
 
 namespace WPFTest.Rest.DBContext
@@ -299,15 +300,38 @@ namespace WPFTest.Rest.DBContext
         {
             foreach (var entry in ChangeTracker.Entries().ToList())
             {
-                var entity = entry.Entity as Person;
-                if (entity == null)
+                SavePerson(entry, entry.Entity as Person);
+                SavePersonContact(entry, entry.Entity as PersonContact);
+            }
+        }
+
+        private void SavePerson(EntityEntry entry, Person person)
+        {
+            if (person == null)
+            {
+                return;
+            }
+            if (entry.State == EntityState.Added)
+            {
+                person.FirstContact = DateTime.Now;
+            }
+        }
+
+        private void SavePersonContact(EntityEntry entry, PersonContact personContact)
+        {
+            if (personContact == null)
+            {
+                return;
+            }
+            if (entry.State == EntityState.Added)
+            {
+                var lastContactId = PersonContact.Where(e => e.PersonId == personContact.PersonId).ToList().LastOrDefault();
+                if (lastContactId != null)
                 {
-                    continue;
+                    personContact.PersonContactId = lastContactId.PersonContactId + 1;
+                    return;
                 }
-                if (entry.State == EntityState.Added)
-                {
-                    entity.FirstContact = DateTime.Now;
-                }
+                personContact.PersonContactId = 1;
             }
         }
 

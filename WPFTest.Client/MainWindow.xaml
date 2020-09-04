@@ -3,16 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFTest.Client"
+        xmlns:viewModel="clr-namespace:WPFTestApp.Client.ViewModel.Main"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <viewModel:MainWindowViewModel x:Key="ViewModel"></viewModel:MainWindowViewModel>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -30,7 +33,7 @@
                  Width="Auto" 
                  Height="30"
                  FontSize="25"
-                 VerticalAlignment="Bottom"></TextBox>
+                 VerticalAlignment="Bottom"/>
         <StackPanel Orientation="Horizontal" 
                     Grid.Column="3" 
                     VerticalAlignment="Bottom" 
@@ -40,48 +43,70 @@
                       Height="30" 
                       Width="55"
                       Name="comboBoxLocales"
-                      SelectedIndex="3"
+                      SelectedIndex="0"
                       FontSize="20"
                       BorderBrush="Transparent"
                       BorderThickness="0"
                       Background="Transparent"
                       HorizontalContentAlignment="Center"
-                      VerticalContentAlignment="Center">
-            </ComboBox>
-            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                    Content="&#xf067;"
-                    Background="Transparent"
+                      VerticalContentAlignment="Center"
+                      SelectedItem="{Binding Source={StaticResource ViewModel}, Path=Locale}"/>
+            <Button Background="Transparent"
                     BorderBrush="Transparent"
                     Height="50"
                     Width="60"
-                    FontSize="40"
-                    Foreground="Blue">
+                    Command="{Binding Source={StaticResource ViewModel}, Path=AddPerson}">
+                <StackPanel>
+                    <TextBlock 
+                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                        FontSize="30"
+                        TextAlignment="Center"
+                        Foreground="#6845f4">&#xf067;</TextBlock>
+                    <TextBlock FontWeight="SemiBold"
+                               TextAlignment="Center">Add</TextBlock>
+                </StackPanel>
             </Button>
-            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                    Content="&#xf304;"
-                    Background="Transparent"
+            <Button Background="Transparent"
                     BorderBrush="Transparent"
                     Height="50"
-                    Width="60"
-                    FontSize="40">
+                    Width="60">
+                <StackPanel>
+                    <TextBlock 
+                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                        FontSize="30"
+                        TextAlignment="Center"
+                        Foreground="#6845f4">&#xf304;</TextBlock>
+                    <TextBlock FontWeight="SemiBold"
+                               TextAlignment="Center">Edit</TextBlock>
+                </StackPanel>
             </Button>
-            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                    Content="&#xf2f9;"
-                    Background="Transparent"
+            <Button Background="Transparent"
                     BorderBrush="Transparent"
                     Height="50"
-                    Width="60"
-                    FontSize="40"
-                    >
+                    Width="60">
+                <StackPanel>
+                    <TextBlock 
+                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                        FontSize="30"
+                        TextAlignment="Center"
+                        Foreground="#6845f4">&#xf2f9;</TextBlock>
+                    <TextBlock FontWeight="SemiBold"
+                               TextAlignment="Center">Refresh</TextBlock>
+                </StackPanel>
             </Button>
-            <Button FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                    Content="&#xf2ed;"
-                    Background="Transparent"
+            <Button Background="Transparent"
                     BorderBrush="Transparent"
                     Height="50"
-                    Width="60"
-                    FontSize="40"
-                    >
+                    Width="60">
+                <StackPanel>
+                    <TextBlock 
+                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
+                        FontSize="30"
+                        TextAlignment="Center"
+                        Foreground="#6845f4">&#xf2ed;</TextBlock>
+                    <TextBlock FontWeight="SemiBold"
+                               TextAlignment="Center">Delete</TextBlock>
+                </StackPanel>
             </Button>
         </StackPanel>
         <DataGrid Grid.Row="1" 
@@ -91,7 +116,7 @@
                   IsReadOnly="True"
                   SelectionMode="Extended" 
                   CanUserAddRows="False"
-                  ItemsSource="{Binding People}"
+                  ItemsSource="{Binding Source={StaticResource ViewModel}, Path=People}"
                   ColumnWidth="*"
                   Margin="5"
                   AutoGeneratingColumn="OnAutoGeneratingColumn">
