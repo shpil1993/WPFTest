@@ -14,24 +14,33 @@ namespace WPFTest.Client.Model
         {
             get
             {
-                string error = string.Empty;
+                Error = string.Empty;
                 switch (columnName)
                 {
-                    case "Value":
+                    case "ContactValue":
                         if (ContactType == ContactType.Email)
                         {
                             Regex regex = new Regex(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
-                            bool isValid = regex.IsMatch(Value.Trim());
+                            bool isValid = regex.IsMatch(ContactValue.Trim());
                             if (!isValid)
                             {
-                                error = "Invalid Email.";
+                                Error = "Invalid Email.";
+                            } 
+                        }
+                        if (ContactType == ContactType.Phone)
+                        {
+                            Regex regex = new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$");
+                            bool isValid = regex.IsMatch(ContactValue.Trim());
+                            if (!isValid)
+                            {
+                                Error = "Invalid Phone.";
                             } 
                         }
                         break;
                     default:
                         break;
                 }
-                return error;
+                return Error;
             }
         }
 
@@ -49,7 +58,7 @@ namespace WPFTest.Client.Model
             } 
         }
 
-        public string Value 
+        public string ContactValue 
         {
             get { return contactValue; }
             set
@@ -59,7 +68,7 @@ namespace WPFTest.Client.Model
                     return;
                 }
                 contactValue = value;
-                OnPropertyChanged("Value");
+                OnPropertyChanged("ContactValue");
             }
         }
 
@@ -71,7 +80,7 @@ namespace WPFTest.Client.Model
 
         public byte Active { get; set; }
 
-        public string Error => null;
+        public string Error { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

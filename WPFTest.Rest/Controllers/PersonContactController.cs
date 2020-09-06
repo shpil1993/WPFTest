@@ -123,6 +123,22 @@ namespace WPFTest.Rest.Controllers
             return personContact;
         }
 
+        [HttpPost]
+        [Route("[action]/{id}")]
+        public async Task<ActionResult<List<PersonContact>>> DeleteContacts(int id, [FromBody] List<int> ids)
+        {
+            var people = await _context.PersonContact.Where(e => ids.Contains(e.PersonContactId) && e.PersonId == id).ToListAsync();
+            if (people == null)
+            {
+                return NotFound();
+            }
+
+            _context.PersonContact.RemoveRange(people);
+            await _context.SaveChangesAsync();
+
+            return people;
+        }
+
         private bool PersonContactExists(int id, int personId)
         {
             return _context.PersonContact.Any(e => e.PersonContactId == id && e.PersonId == personId);

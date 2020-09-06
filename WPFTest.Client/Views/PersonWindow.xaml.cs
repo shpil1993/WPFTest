@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using WPFTest.Client.ViewModel.Person;
+using WPFTest.Client.Enums;
+using WPFTest.Client.Model;
+using WPFTest.Client.ViewModel.PersonWindow;
 
 namespace WPFTest.Client.Views
 {
@@ -18,10 +12,12 @@ namespace WPFTest.Client.Views
     /// </summary>
     public partial class PersonWindow : Window
     {
-        public PersonWindow(int lang)
+        public PersonWindow(int lang, Person person = null)
         {
             InitializeComponent();
-            DataContext = new PersonWindowViewModel(lang);
+            genderComboBox.ItemsSource = Enum.GetValues(typeof(Gender)).Cast<Gender>();
+            contactsPanel.Visibility = person == null ? Visibility.Hidden : Visibility.Visible;
+            DataContext = new PersonWindowViewModel(lang, person);
         }
     }
 }

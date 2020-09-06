@@ -5,109 +5,155 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTest.Client.Views"
         mc:Ignorable="d"
-        Title="PersonWindow" Height="Auto" Width="400"
-        ResizeMode="NoResize">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        <TextBlock Foreground="Gray" FontSize="25" Margin="5">User Profile</TextBlock>
-        <StackPanel Grid.Row="1">
-            <TextBlock FontWeight="Bold" Margin="10">Person</TextBlock>
-            <ComboBox Margin="10" 
+        Title="PersonWindow" Width="400" MaxHeight="500"
+        Name="PersonWindowName"
+        ResizeMode="NoResize"
+        SizeToContent="Height">
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Foreground="Gray" FontSize="25" Margin="5">User Profile</TextBlock>
+            <StackPanel Grid.Row="1">
+                <TextBlock FontWeight="Bold" Margin="10">Person</TextBlock>
+                <Label>Greeting:</Label>
+                <ComboBox Margin="10" 
                       Background="Transparent" 
                       BorderBrush="Transparent"
                       ItemsSource="{Binding Path=Greetings}"
-                      DisplayMemberPath="Text"/>
-            <ComboBox Margin="10" 
+                      DisplayMemberPath="Text"
+                      SelectedValuePath="Id"
+                      SelectedItem="{Binding Path=Person.Greeting, 
+                UpdateSourceTrigger=PropertyChanged, 
+                ValidatesOnDataErrors=True, 
+                NotifyOnValidationError=True}"
+                      SelectedValue="{Binding Path=Person.Greeting.Id, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label>Gender:</Label>
+                <ComboBox Margin="10" 
                       Background="Transparent" 
-                      BorderBrush="Transparent"/>
-            <TextBox Margin="10"></TextBox>
-            <TextBox Margin="10"></TextBox>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
-            <TextBlock FontWeight="Bold" Margin="10">Address</TextBlock>
-            <ComboBox Margin="10" 
+                      BorderBrush="Transparent"
+                      Name="genderComboBox"
+                      SelectedItem="{Binding Path=Person.Gender, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedIndex="0"/>
+                <Label>First Name:</Label>
+                <TextBox Margin="10" 
+                     Text="{Binding Path=Person.FirstName, 
+                ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+                <Label>Last Name:</Label>
+                <TextBox Margin="10" 
+                     Text="{Binding Path=Person.LastName, 
+                ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+                <TextBlock FontWeight="Bold" Margin="10">Address</TextBlock>
+                <Label>Country:</Label>
+                <ComboBox Margin="10" 
                       Background="Transparent" 
                       BorderBrush="Transparent"
                       ItemsSource="{Binding Path=Countries}"
-                      DisplayMemberPath="CountryName"/>
-            <TextBox Margin="10"></TextBox>
-            <TextBox Margin="10"></TextBox>
-            <TextBox Margin="10"></TextBox>
-        </StackPanel>
-        <StackPanel Grid.Row="2">
-            <TextBlock FontWeight="Bold" Margin="10">Work</TextBlock>
-            <TextBox Margin="10"></TextBox>
-            <TextBox Margin="10"></TextBox>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2">
-            <TextBlock FontWeight="Bold" Margin="10">Contacts</TextBlock>
-            <StackPanel Orientation="Horizontal">
-                <Button Background="Transparent"
+                      DisplayMemberPath="CountryName"
+                      SelectedValuePath="CountryCode"
+                      SelectedItem="{Binding Path=Person.Country, 
+                UpdateSourceTrigger=PropertyChanged, 
+                ValidatesOnDataErrors=True, 
+                NotifyOnValidationError=True}"
+                      SelectedValue="{Binding Path=Person.Country.CountryCode, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label>City:</Label>
+                <TextBox Margin="10" Text="{Binding Path=Person.City}"/>
+                <Label>Street:</Label>
+                <TextBox Margin="10" Text="{Binding Path=Person.Street}"/>
+                <Label>Postal Code:</Label>
+                <TextBox Margin="10" Text="{Binding Path=Person.PostalCode}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <TextBlock FontWeight="Bold" Margin="10">Work</TextBlock>
+                <Label>Company:</Label>
+                <TextBox Margin="10" Text="{Binding Path=Person.Company}"/>
+                <Label>Title:</Label>
+                <TextBox Margin="10" Text="{Binding Path=Person.Title}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Name="contactsPanel">
+                <TextBlock FontWeight="Bold" Margin="10">Contacts</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <Button Background="Transparent"
                         BorderBrush="Transparent"
-                        Margin="5">
-                    <StackPanel>
-                        <TextBlock 
+                        Margin="5"
+                        Command="{Binding Path=AddContactCommand}">
+                        <StackPanel>
+                            <TextBlock 
                         FontFamily="{StaticResource FontAwesomeFontFamily}" 
                         FontSize="15"
                         TextAlignment="Center"
                         Foreground="#6845f4">&#xf067;</TextBlock>
-                        <TextBlock FontWeight="SemiBold"
+                            <TextBlock FontWeight="SemiBold"
                                TextAlignment="Center">Add</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Background="Transparent"
+                        </StackPanel>
+                    </Button>
+                    <Button Background="Transparent"
                         BorderBrush="Transparent"
-                        Margin="5">
-                    <StackPanel>
-                        <TextBlock 
+                        Margin="5"
+                            Command="{Binding Path=EditContactCommand}"
+                            CommandParameter="{Binding ElementName=contactList, Path=SelectedItem}">
+                        <StackPanel>
+                            <TextBlock 
                         FontFamily="{StaticResource FontAwesomeFontFamily}" 
                         FontSize="15"
                         TextAlignment="Center"
                         Foreground="#6845f4">&#xf304;</TextBlock>
-                        <TextBlock FontWeight="SemiBold"
+                            <TextBlock FontWeight="SemiBold"
                                TextAlignment="Center">Edit</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Background="Transparent"
+                        </StackPanel>
+                    </Button>
+                    <Button Background="Transparent"
                         BorderBrush="Transparent"
-                        Margin="5">
-                    <StackPanel>
-                        <TextBlock 
+                        Margin="5"
+                            Command="{Binding Path=DeleteContactCommand}"
+                            CommandParameter="{Binding ElementName=contactList, Path=SelectedItems}">
+                        <StackPanel>
+                            <TextBlock 
                         FontFamily="{StaticResource FontAwesomeFontFamily}" 
                         FontSize="15"
                         TextAlignment="Center"
                         Foreground="#6845f4">&#xf2ed;</TextBlock>
-                        <TextBlock FontWeight="SemiBold"
+                            <TextBlock FontWeight="SemiBold"
                                TextAlignment="Center">Delete</TextBlock>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-            <ListBox ItemsSource="{Binding Contacts}" SelectionMode="Multiple">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="16" Text="{Binding Path=ContactType}" HorizontalAlignment="Left" />
-                            <TextBlock FontSize="16" Text="{Binding Path=Value}" HorizontalAlignment="Left" />
                         </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-        <Button Grid.Row="4" Grid.Column="1"
+                    </Button>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding Contacts}" SelectionMode="Multiple"
+                         Name="contactList">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="Auto" Orientation="Horizontal">
+                                <TextBlock FontSize="16" Text="{Binding Path=ContactType}" HorizontalAlignment="Left" Margin="10"/>
+                                <TextBlock FontSize="16" Text="{Binding Path=ContactValue}" HorizontalAlignment="Right" Margin="10" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <Button Grid.Row="4" Grid.Column="1"
                 HorizontalAlignment="Right"
                 Margin="10"
                 Foreground="White"
                 Background="#6845f4"
-                Padding="20 5">Save</Button>
-    </Grid>
+                Padding="20 5"
+                Command="{Binding Path=SavePersonCommand}"
+                CommandParameter="{Binding ElementName=PersonWindowName}">Save</Button>
+        </Grid>
+    </ScrollViewer>
 </Window>

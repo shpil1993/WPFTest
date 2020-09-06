@@ -24,7 +24,7 @@ namespace WPFTest.Rest.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IEnumerable<object> GetPeopleForTable(int take, int skip, int lang, string search)
+        public object GetPeopleForTable(int take, int skip, int lang, string search)
         {
             var people = (from person in FilterPeople(search)
                           join country in _context.Country on person.CountryCode equals country.Code
@@ -43,11 +43,16 @@ namespace WPFTest.Rest.Controllers
                               PostalCode = person.Zip,
                               Registration = person.FirstContact.ToString("MMMM dd, yyyy"),
                               Title = person.Title,
-                              Greeting = LocalizationChecker.CheckLocalization(lang, greeting),
-                              Country = LocalizationChecker.CheckLocalization(lang, country),
-                              Phone = pc.Txt
-                          }).Skip(skip).Take(take).ToList();
-            return people;
+                              Greeting =  new { Id = greeting.Id, Text = LocalizationChecker.CheckLocalization(lang, greeting) },
+                              GreetingText = LocalizationChecker.CheckLocalization(lang, greeting),
+                              Country = new { CountryCode = country.Code, CountryName = LocalizationChecker.CheckLocalization(lang, country) },
+                              CountryName = LocalizationChecker.CheckLocalization(lang, country),
+                              Phone = pc.Txt,
+                              Gender = person.GenderId
+                          });
+            var count = people.Count();
+            var result = people.Skip(skip * take).Take(take).ToList();
+            return new { Count = count, People = result};
         }
 
         // GET: api/People
@@ -129,6 +134,23 @@ namespace WPFTest.Rest.Controllers
             await _context.SaveChangesAsync();
 
             return person;
+        }
+
+        // DELETE: api/People/5
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<List<Person>>> DeletePeople([FromBody] List<int> ids)
+        {
+            var people = await _context.Person.Where(e => ids.Contains(e.Id)).ToListAsync();
+            if (people == null)
+            {
+                return NotFound();
+            }
+
+            _context.Person.RemoveRange(people);
+            await _context.SaveChangesAsync();
+
+            return people;
         }
 
         private bool PersonExists(int id)

@@ -24,9 +24,9 @@ namespace WPFTest.Client.Service
             _client = new HttpClient();
         }
 
-        public List<Person> GetPeopleForTable(int take, int skip, int lang, string search)
+        public PeopleWithCount GetPeopleForTable(int take, int skip, int lang, string search)
         {
-            List<Person> people = null;
+            PeopleWithCount people = null;
 
             var url = $"{_url}{_people}/GetPeopleForTable?take={take}&skip={skip}&lang={lang}";
 
@@ -40,43 +40,85 @@ namespace WPFTest.Client.Service
             if (request.IsSuccessStatusCode)
             {
                 var data = request.Content.ReadAsStringAsync().Result;
-                people = JsonConvert.DeserializeObject<List<Person>>(data);
+                people = JsonConvert.DeserializeObject<PeopleWithCount>(data);
             }
 
             return people;
         }
 
-        public Person GetPerson(int id)
+        public bool DeletePeople(List<int> ids)
         {
-            Person person = null;
+            var url = $"{_url}{_people}/deletepeople";
 
-            var url = $"{_url}{_people}/{id}";
-
-            var request = _client.GetAsync(url).Result;
-
+            var myContent = JsonConvert.SerializeObject(ids);
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var request = _client.PostAsync(url, byteContent).Result;
             if (request.IsSuccessStatusCode)
             {
-                var data = request.Content.ReadAsStringAsync().Result;
-                var result = JsonConvert.DeserializeObject<dynamic>(data);
-                person = new Person()
-                {
-                    AddressNo = result.Id,
-                    Birthday = result.DateOfBirth.HasValue ? result.DateOfBirth.Value.ToString() : string.Empty,
-                    Street = result.Street,
-                    City = result.City,
-                    Company = result.Cpny,
-                    FirstName = result.Fname,
-                    LastName = result.Lname,
-                    PostalCode = result.Zip,
-                    Registration = result.FirstContact.ToString(),
-                    Title = result.Title,
-                    GreetingId = result.GreetingId,
-                    CountryCode = result.CountryCode,
-                    Gender = (Gender)result.GenderId
-                };
+                return true;
             }
+            return false;
+        }
 
-            return person;
+        public bool SavePerson(Person person)
+        {
+            var url = $"{_url}{_people}";
+
+            if (person.AddressNo > 0)
+            {
+                url += $"/{person.AddressNo}";
+                var myContent = JsonConvert.SerializeObject(new
+                {
+                    Id = person.AddressNo,
+                    Title = person.Title,
+                    Fname = person.FirstName,
+                    Lname = person.LastName,
+                    Cpny = person.Company,
+                    Street = person.Street,
+                    CountryCode = person.Country.CountryCode,
+                    Zip = person.PostalCode,
+                    City = person.City,
+                    GenderId = (int)person.Gender,
+                    GreetingId = person.Greeting.Id,
+                    Notes = string.Empty
+                });
+                var buffer = Encoding.UTF8.GetBytes(myContent);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var request = _client.PutAsync(url, byteContent).Result;
+                if (request.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                var myContent = JsonConvert.SerializeObject(new
+                {
+                    Title = person.Title,
+                    Fname = person.FirstName,
+                    Lname = person.LastName,
+                    Cpny = person.Company,
+                    Street = person.Street,
+                    CountryCode = person.Country.CountryCode,
+                    Zip = person.PostalCode,
+                    City = person.City,
+                    GenderId = (int)person.Gender,
+                    GreetingId = person.Greeting.Id,
+                    Notes = string.Empty
+                });
+                var buffer = Encoding.UTF8.GetBytes(myContent);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var request = _client.PostAsync(url, byteContent).Result;
+                if (request.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public List<Contact> GetContactsForPerson(int personId)
@@ -91,12 +133,12 @@ namespace WPFTest.Client.Service
             {
                 var data = request.Content.ReadAsStringAsync().Result;
                 contacts = JsonConvert.DeserializeObject<IEnumerable<dynamic>>(data).Select(e=> new Contact() {
-                    PersonId = e.PersonId,
-                    PersonContactId = e.PersonContactId,
-                    ContactType = (ContactType)e.ContactTypeId,
-                    Value = e.Txt,
-                    Note = e.Notes,
-                    Active = e.Active
+                    PersonId = e.personId,
+                    PersonContactId = e.personContactId,
+                    ContactType = (ContactType)e.contactTypeId,
+                    ContactValue = e.txt,
+                    Note = e.notes,
+                    Active = e.active
                 }).ToList();
             }
 
@@ -117,12 +159,12 @@ namespace WPFTest.Client.Service
                 var result = JsonConvert.DeserializeObject<dynamic>(data);
                 contact = new Contact()
                 {
-                    PersonId = result.PersonId,
-                    PersonContactId = result.PersonContactId,
-                    ContactType = (ContactType)result.ContactTypeId,
-                    Value = result.Txt,
-                    Note = result.Notes,
-                    Active = result.Active
+                    PersonId = result.personId,
+                    PersonContactId = result.personContactId,
+                    ContactType = (ContactType)result.contactTypeId,
+                    ContactValue = result.txt,
+                    Note = result.notes,
+                    Active = result.active
                 };
             }
 
@@ -141,7 +183,7 @@ namespace WPFTest.Client.Service
                     PersonId = contact.PersonId,
                     PersonContactId = contact.PersonContactId,
                     ContactTypeId = (int)contact.ContactType,
-                    Txt = contact.Value,
+                    Txt = contact.ContactValue,
                     Notes = contact.Note,
                     Active = contact.Active
                 });
@@ -161,7 +203,7 @@ namespace WPFTest.Client.Service
                     PersonId = contact.PersonId,
                     PersonContactId = 0,
                     ContactTypeId = (int)contact.ContactType,
-                    Txt = contact.Value,
+                    Txt = contact.ContactValue,
                     Notes = string.Empty,
                     Active = 1
                 });
@@ -173,6 +215,22 @@ namespace WPFTest.Client.Service
                 {
                     return true;
                 }
+            }
+            return false;
+        }
+
+        public bool DeleteContacts(int personId, List<int> ids)
+        {
+            var url = $"{_url}{_personContact}/deletecontacts/{personId}";
+
+            var myContent = JsonConvert.SerializeObject(ids);
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var request = _client.PostAsync(url, byteContent).Result;
+            if (request.IsSuccessStatusCode)
+            {
+                return true;
             }
             return false;
         }
