@@ -134,13 +134,13 @@ namespace WPFTestApp.Client.ViewModel.Main
             RefreshGrid(PageSize, Page, (int)Locale, Search);
         }
 
-        private void RefreshGrid(int take, int skip, int lang, string search)
+        private async void RefreshGrid(int take, int skip, int lang, string search)
         {
             var service = new HttpService();
             if (People != null)
             {
                 People.Clear();
-                var res = service.GetPeopleForTable(take, skip, lang, search);
+                var res = await service.GetPeopleForTable(take, skip, lang, search);
                 Count = (int)Math.Ceiling((double)(res.Count / PageSize));
                 foreach (var item in res.People)
                 {

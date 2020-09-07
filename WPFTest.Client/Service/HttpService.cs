@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using WPFTest.Client.Enums;
 using WPFTest.Client.Model;
 
@@ -24,7 +25,7 @@ namespace WPFTest.Client.Service
             _client = new HttpClient();
         }
 
-        public PeopleWithCount GetPeopleForTable(int take, int skip, int lang, string search)
+        public async Task<PeopleWithCount> GetPeopleForTable(int take, int skip, int lang, string search)
         {
             PeopleWithCount people = null;
 
@@ -35,11 +36,11 @@ namespace WPFTest.Client.Service
                 url += $"&search={search}";
             }
 
-            var request = _client.GetAsync(url).Result;
+            var request = await _client.GetAsync(url);
 
             if (request.IsSuccessStatusCode)
             {
-                var data = request.Content.ReadAsStringAsync().Result;
+                var data = await request.Content.ReadAsStringAsync();
                 people = JsonConvert.DeserializeObject<PeopleWithCount>(data);
             }
 

@@ -24,7 +24,7 @@ namespace WPFTest.Rest.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public object GetPeopleForTable(int take, int skip, int lang, string search)
+        public async Task<ActionResult<object>> GetPeopleForTable(int take, int skip, int lang, string search)
         {
             var people = (from person in FilterPeople(search)
                           join country in _context.Country on person.CountryCode equals country.Code
@@ -50,8 +50,8 @@ namespace WPFTest.Rest.Controllers
                               Phone = pc.Txt,
                               Gender = person.GenderId
                           });
-            var count = people.Count();
-            var result = people.Skip(skip * take).Take(take).ToList();
+            var count = await people.CountAsync();
+            var result = await people.Skip(skip * take).Take(take).ToListAsync();
             return new { Count = count, People = result};
         }
 
