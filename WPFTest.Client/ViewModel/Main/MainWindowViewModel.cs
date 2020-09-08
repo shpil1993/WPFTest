@@ -73,6 +73,7 @@ namespace WPFTestApp.Client.ViewModel.Main
                     return;
                 }
                 pageSize = value;
+                Page = 0;
                 RefreshGrid(pageSize, Page, (int)Locale, Search);
                 OnPropertyChanged("PageSize");
             }

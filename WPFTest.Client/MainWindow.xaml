@@ -19,114 +19,72 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
         <Viewbox VerticalAlignment="Bottom" HorizontalAlignment="Left">
             <TextBlock TextWrapping="Wrap" 
                        Text="Customers" 
                        Margin="3"/>
         </Viewbox>
-        <TextBox Margin="10" 
-                 Grid.Column="1" 
+        <TextBox Grid.Column="1" 
                  Grid.ColumnSpan="2"
-                 Width="Auto" 
-                 Height="30"
-                 FontSize="25"
-                 VerticalAlignment="Bottom"
-                 Text="{Binding Source={StaticResource ViewModel}, Path=Search, UpdateSourceTrigger=PropertyChanged}"/>
+                 Style="{StaticResource ResourceKey=searchTextbox}"
+                 Text="{Binding Source={StaticResource ViewModel}, Path=Search, UpdateSourceTrigger=PropertyChanged, Delay=200}"/>
         <StackPanel Orientation="Horizontal" 
                     Grid.Column="3" 
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Right"
                     Grid.ColumnSpan="2">
-            <ComboBox Margin="5" 
-                      Height="30" 
-                      Width="55"
-                      Name="comboBoxLocales"
+            <ComboBox Name="comboBoxLocales"
+                      Style="{StaticResource ResourceKey=langCombobox}"
                       SelectedIndex="0"
-                      FontSize="20"
-                      BorderBrush="Transparent"
-                      BorderThickness="0"
-                      Background="Transparent"
-                      HorizontalContentAlignment="Center"
-                      VerticalContentAlignment="Center"
                       SelectedItem="{Binding Source={StaticResource ViewModel}, Path=Locale, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Background="Transparent"
-                    BorderBrush="Transparent"
-                    Height="50"
-                    Width="60"
+            <Button Style="{StaticResource ResourceKey=gridButton}"
                     Command="{Binding Source={StaticResource ViewModel}, Path=AddPersonCommand}">
                 <StackPanel>
-                    <TextBlock 
-                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                        FontSize="30"
-                        TextAlignment="Center"
-                        Foreground="#6845f4">&#xf067;</TextBlock>
-                    <TextBlock FontWeight="SemiBold"
-                               TextAlignment="Center">Add</TextBlock>
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}"
+                               Text="&#xf067;"/>
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
+                               Text="Add"/>
                 </StackPanel>
             </Button>
-            <Button Background="Transparent"
-                    BorderBrush="Transparent"
-                    Height="50"
-                    Width="60"
+            <Button Style="{StaticResource ResourceKey=gridButton}"
                     Command="{Binding Source={StaticResource ViewModel}, Path=EditPersonCommand}"
                     CommandParameter="{Binding ElementName=dataGrid1, Path=SelectedItem}">
                 <StackPanel>
-                    <TextBlock 
-                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                        FontSize="30"
-                        TextAlignment="Center"
-                        Foreground="#6845f4">&#xf304;</TextBlock>
-                    <TextBlock FontWeight="SemiBold"
-                               TextAlignment="Center">Edit</TextBlock>
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}" 
+                               Text="&#xf304;"/>
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
+                               Text="Edit"/>
                 </StackPanel>
             </Button>
-            <Button Background="Transparent"
-                    BorderBrush="Transparent"
-                    Height="50"
-                    Width="60"
+            <Button Style="{StaticResource ResourceKey=gridButton}"
                     Command="{Binding Source={StaticResource ViewModel}, Path=RefreshPersonCommand}">
                 <StackPanel>
-                    <TextBlock 
-                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                        FontSize="30"
-                        TextAlignment="Center"
-                        Foreground="#6845f4">&#xf2f9;</TextBlock>
-                    <TextBlock FontWeight="SemiBold"
-                               TextAlignment="Center">Refresh</TextBlock>
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}"
+                               Text="&#xf2f9;"/>
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
+                               Text="Refresh"/>
                 </StackPanel>
             </Button>
-            <Button Background="Transparent"
-                    BorderBrush="Transparent"
-                    Height="50"
-                    Width="60"
+            <Button Style="{StaticResource ResourceKey=gridButton}"
                     Command="{Binding Source={StaticResource ViewModel}, Path=DeletePersonCommand}"
                     CommandParameter="{Binding ElementName=dataGrid1, Path=SelectedItems}">
                 <StackPanel>
-                    <TextBlock 
-                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                        FontSize="30"
-                        TextAlignment="Center"
-                        Foreground="#6845f4">&#xf2ed;</TextBlock>
-                    <TextBlock FontWeight="SemiBold"
-                               TextAlignment="Center">Delete</TextBlock>
+                    <TextBlock Style="{StaticResource gridButtonIcon}"
+                               Text="&#xf2ed;"/>
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
+                               Text="Delete"/>
                 </StackPanel>
             </Button>
         </StackPanel>
-        <DataGrid Grid.Row="1" 
+        <DataGrid Style="{StaticResource ResourceKey=mainDatagrid}" 
+                  Grid.Row="1" 
                   Grid.ColumnSpan="5" 
-                  Name="dataGrid1" 
-                  CanUserSortColumns="True"
-                  IsReadOnly="True"
-                  SelectionMode="Extended" 
-                  CanUserAddRows="False"
+                  Name="dataGrid1"
                   ItemsSource="{Binding Source={StaticResource ViewModel}, Path=People, UpdateSourceTrigger=PropertyChanged}"
-                  ColumnWidth="*"
-                  Margin="5"
                   AutoGeneratingColumn="OnAutoGeneratingColumn"
-                  SelectionUnit="FullRow"
                   SelectedItem="{Binding Source={StaticResource ViewModel}, Path=SelectedPerson}">
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
@@ -139,21 +97,16 @@
                       Name="comboboxPageSize"
                       SelectedIndex="1"
                       Margin="10"/>
-            <Button Margin="10"
-                    Padding="10 0"
+            <Button Style="{StaticResource ResourceKey=paging}"
                     Content="Prev."
                     Command="{Binding Source={StaticResource ViewModel}, Path=PrevCommand}"/>
-            <TextBlock Margin="10"
-                       Padding="10 0"
+            <TextBlock Style="{StaticResource ResourceKey=paging}"
                        Text="{Binding Source={StaticResource ViewModel}, Path=Page}"/>
-            <TextBlock Margin="10"
-                       Padding="10 0"
+            <TextBlock Style="{StaticResource ResourceKey=paging}"
                        Text="of"/>
-            <TextBlock Margin="10"
-                       Padding="10 0"
+            <TextBlock Style="{StaticResource ResourceKey=paging}"
                        Text="{Binding Source={StaticResource ViewModel}, Path=Count}"/>
-            <Button Margin="10"
-                    Padding="10 0"
+            <Button Style="{StaticResource ResourceKey=paging}"
                     Content="Next"
                     Command="{Binding Source={StaticResource ViewModel}, Path=NextCommand}"/>
         </StackPanel>

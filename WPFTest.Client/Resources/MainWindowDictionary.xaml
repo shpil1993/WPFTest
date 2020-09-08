@@ -1,0 +1,53 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPFTest.Client.Resources">
+    <Style x:Key="gridButton" TargetType="Button">
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+    <Style x:Key="gridButtonIcon" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeFontFamily}"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#6845f4"/>
+    </Style>
+    <Style x:Key="gridButtonText" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="paging">
+        <Setter Property="Control.Margin" Value="10"/>
+        <Setter Property="Control.Padding" Value="10 0"/>
+    </Style>
+    <Style x:Key="searchTextbox" TargetType="TextBox">
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+    </Style>
+    <Style x:Key="langCombobox" TargetType="ComboBox">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Width" Value="55"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="mainDatagrid" TargetType="DataGrid">
+        <Setter Property="CanUserSortColumns" Value="True"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="SelectionMode" Value="Extended"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="ColumnWidth" Value="*"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="SelectionUnit" Value="FullRow"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+</ResourceDictionary>

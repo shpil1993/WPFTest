@@ -56,6 +56,12 @@ namespace WPFTest.Client.Model
                             Error = "Country is required!"; 
                         }
                         break;
+                    case "City":
+                        if (City == null)
+                        {
+                            Error = "City is required!"; 
+                        }
+                        break;
                     default:
                         break;
                 }
