@@ -7,6 +7,15 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Background" Value="#6845f4"/>
         <Setter Property="Padding" Value="20 5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="1" Background="#6845f4" BorderThickness="1" >
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     <Style x:Key="dialogHead" TargetType="TextBlock">
         <Setter Property="FontSize" Value="25"/>
