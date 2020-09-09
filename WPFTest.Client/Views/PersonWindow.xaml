@@ -38,9 +38,7 @@
                     NotifyOnValidationError=True}" 
                           SelectedValue="{Binding 
                     Path=Person.Greeting.Id, 
-                    UpdateSourceTrigger=PropertyChanged}"
-                          BorderThickness="0 0 0 1"
-                          Foreground="Transparent"/>
+                    UpdateSourceTrigger=PropertyChanged}"/>
                 <Label>Gender:</Label>
                 <ComboBox Style="{StaticResource ResourceKey=personCombobox}" 
                           Name="genderComboBox" 
