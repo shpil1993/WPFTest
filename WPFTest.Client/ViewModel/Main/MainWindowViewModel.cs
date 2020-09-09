@@ -89,7 +89,6 @@ namespace WPFTestApp.Client.ViewModel.Main
                     return;
                 }
                 page = value;
-
                 OnPropertyChanged("Page");
             }
         }

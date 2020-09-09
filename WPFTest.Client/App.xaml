@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/MainWindowDictionary.xaml" />
                 <ResourceDictionary Source="Resources/PersonWindowDictionary.xaml" />
+                <ResourceDictionary Source="Resources/CommonStylesDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

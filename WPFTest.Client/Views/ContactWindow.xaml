@@ -10,43 +10,26 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Name="ContactWindowName">
-    <Window.Resources>
-        <src:Contact x:Key="data"/>
-        <Style x:Key="textBoxInError" TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip"
-                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-                        Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Foreground="Gray" FontSize="25" Margin="5">New Contact</TextBlock>
+        <TextBlock Style="{StaticResource ResourceKey=dialogHead}"
+                   Text="New Contact"/>
         <StackPanel Grid.Row="1">
-            <ComboBox Margin="10" 
-                      Background="Transparent" 
-                      BorderBrush="Transparent"
-                      Name="contactTypeCombobox"
+            <ComboBox Name="contactTypeCombobox"
+                      Style="{StaticResource ResourceKey=personCombobox}"
                       SelectedItem="{Binding Path=Contact.ContactType, UpdateSourceTrigger=PropertyChanged}"
                       SelectedIndex="0"/>
-            <TextBox Margin="10" 
+            <TextBox Style="{StaticResource ResourceKey=personTextbox}"
                      Text="{Binding Path=Contact.ContactValue, 
                 UpdateSourceTrigger=PropertyChanged, 
                 ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
         </StackPanel>
         <Button Grid.Row="2" 
-                HorizontalAlignment="Right"
-                Margin="10"
-                Foreground="White"
-                Background="#6845f4"
-                Padding="7"
+                Style="{StaticResource ResourceKey=saveBtn}"
                 Command="{Binding Path=SaveContactCommand}"
                 CommandParameter="{Binding ElementName=ContactWindowName}"
                 Content="Add Contact"/>

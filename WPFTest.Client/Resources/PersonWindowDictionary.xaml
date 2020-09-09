@@ -19,7 +19,6 @@
         <Setter Property="Margin" Value="5"/>
     </Style>
     <Style x:Key="contactGridIcon" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource ResourceKey=FontAwesomeFontFamily}"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="#6845f4"/>
@@ -27,5 +26,10 @@
     <Style x:Key="contactGridText" TargetType="TextBlock">
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="contactGridCell" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="10"/>
     </Style>
 </ResourceDictionary>

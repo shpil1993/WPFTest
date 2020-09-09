@@ -8,7 +8,6 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
     <Style x:Key="gridButtonIcon" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeFontFamily}"/>
         <Setter Property="FontSize" Value="25"/>
         <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="#6845f4"/>

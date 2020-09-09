@@ -44,6 +44,7 @@
                     Command="{Binding Source={StaticResource ViewModel}, Path=AddPersonCommand}">
                 <StackPanel>
                     <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}"
+                               FontFamily="{StaticResource ResourceKey=FontAwesomeFontFamily}"
                                Text="&#xf067;"/>
                     <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
                                Text="Add"/>
@@ -53,7 +54,8 @@
                     Command="{Binding Source={StaticResource ViewModel}, Path=EditPersonCommand}"
                     CommandParameter="{Binding ElementName=dataGrid1, Path=SelectedItem}">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}" 
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}"
+                               FontFamily="{StaticResource ResourceKey=FontAwesomeFontFamily}"
                                Text="&#xf304;"/>
                     <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
                                Text="Edit"/>
@@ -63,6 +65,7 @@
                     Command="{Binding Source={StaticResource ViewModel}, Path=RefreshPersonCommand}">
                 <StackPanel>
                     <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}"
+                               FontFamily="{StaticResource ResourceKey=FontAwesomeFontFamily}"
                                Text="&#xf2f9;"/>
                     <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
                                Text="Refresh"/>
@@ -72,7 +75,8 @@
                     Command="{Binding Source={StaticResource ViewModel}, Path=DeletePersonCommand}"
                     CommandParameter="{Binding ElementName=dataGrid1, Path=SelectedItems}">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource gridButtonIcon}"
+                    <TextBlock Style="{StaticResource ResourceKey=gridButtonIcon}"
+                               FontFamily="{StaticResource ResourceKey=FontAwesomeFontFamily}"
                                Text="&#xf2ed;"/>
                     <TextBlock Style="{StaticResource ResourceKey=gridButtonText}"
                                Text="Delete"/>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTest.Client.Views"
         mc:Ignorable="d"
-        Title="PersonWindow" Width="400" 
+        Title="PersonWindow" Width="400" MaxHeight="600"
         Name="PersonWindowName"
         ResizeMode="NoResize">
     <ScrollViewer>
@@ -21,7 +21,8 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Foreground="Gray" FontSize="25" Margin="5">User Profile</TextBlock>
+            <TextBlock Style="{StaticResource ResourceKey=dialogHead}"
+                       Text="User Profile"/>
             <StackPanel Grid.Row="1">
                 <TextBlock Style="{StaticResource ResourceKey=headTextBlock}"
                            Text="Person"/>
@@ -105,6 +106,7 @@
                             Command="{Binding Path=AddContactCommand}">
                         <StackPanel>
                             <TextBlock Style="{StaticResource ResourceKey=contactGridIcon}"
+                                       FontFamily="{StaticResource ResourceKey=FontAwesomeFontFamily}"
                                        Text="&#xf067;"/>
                             <TextBlock Style="{StaticResource ResourceKey=contactGridText}"
                                        Text="Add"/>
@@ -115,23 +117,20 @@
                             CommandParameter="{Binding ElementName=contactList, Path=SelectedItem}">
                         <StackPanel>
                             <TextBlock Style="{StaticResource ResourceKey=contactGridIcon}"
+                                       FontFamily="{StaticResource ResourceKey=FontAwesomeFontFamily}"
                                        Text="&#xf304;"/>
                             <TextBlock Style="{StaticResource ResourceKey=gridButtonText}">Edit</TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button Background="Transparent"
-                        BorderBrush="Transparent"
-                        Margin="5"
-                            Command="{Binding Path=DeleteContactCommand}"
+                    <Button Style="{StaticResource ResourceKey=contactGridBtn}" 
+                            Command="{Binding Path=DeleteContactCommand}" 
                             CommandParameter="{Binding ElementName=contactList, Path=SelectedItems}">
                         <StackPanel>
-                            <TextBlock 
-                        FontFamily="{StaticResource FontAwesomeFontFamily}" 
-                        FontSize="15"
-                        TextAlignment="Center"
-                        Foreground="#6845f4">&#xf2ed;</TextBlock>
-                            <TextBlock FontWeight="SemiBold"
-                               TextAlignment="Center">Delete</TextBlock>
+                            <TextBlock Style="{StaticResource ResourceKey=contactGridIcon}"
+                                       FontFamily="{StaticResource ResourceKey=FontAwesomeFontFamily}"
+                                       Text="&#xf2ed;"/>
+                            <TextBlock Style="{StaticResource ResourceKey=contactGridText}"
+                                       Text="Delete"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -144,22 +143,27 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="Auto" Orientation="Horizontal">
-                                <TextBlock FontSize="16" Text="{Binding Path=ContactType}" HorizontalAlignment="Left" Margin="10"/>
-                                <TextBlock FontSize="16" Text="{Binding Path=ContactValue}" HorizontalAlignment="Right" Margin="10" />
-                            </StackPanel>
+                            <Grid Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Path=ContactType}" 
+                                           Style="{StaticResource ResourceKey=contactGridCell}"/>
+                                <TextBlock Text="{Binding Path=ContactValue}" 
+                                           Grid.Column="1"
+                                           Style="{StaticResource ResourceKey=contactGridCell}"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
-            <Button Grid.Row="4" Grid.Column="1"
-                HorizontalAlignment="Right"
-                Margin="10"
-                Foreground="White"
-                Background="#6845f4"
-                Padding="20 5"
-                Command="{Binding Path=SavePersonCommand}"
-                CommandParameter="{Binding ElementName=PersonWindowName}">Save</Button>
+            <Button Grid.Row="4" 
+                    Grid.Column="1" 
+                    Style="{StaticResource ResourceKey=saveBtn}" 
+                    Command="{Binding Path=SavePersonCommand}" 
+                    CommandParameter="{Binding ElementName=PersonWindowName}"
+                    Content="Save"/>
         </Grid>
     </ScrollViewer>
 </Window>

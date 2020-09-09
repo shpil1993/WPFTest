@@ -69,10 +69,7 @@ namespace WPFTest.Client.ViewModel
                 MessageBox.Show(Contact.Error, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (client.SaveContact(Contact))
-            {
-                window.DialogResult = true;
-            }
+            window.DialogResult = client.SaveContact(Contact);
         }
     }
 }
